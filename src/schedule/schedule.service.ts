@@ -1,44 +1,50 @@
-@Get(':employeeId/grouped-schedule')
-async getGroupedSchedule(
-  @Param('employeeId') employeeId: number,
-  @Query('startDate') startDate: string,
-  @Query('endDate') endDate: string,
-) {
-  return this.scheduleService.getGroupedSchedule(employeeId, startDate, endDate);
-}
-
-
-
-
-
-
-
-GET /schedule/3/grouped-schedule?startDate=2024-04-01&endDate=2024-04-07
-
-
-
-
-
-
-
-
-
 import { Injectable } from '@nestjs/common';
+import { CreateScheduleDto } from './dto/create-schedule.dto';
+import { UpdateScheduleDto } from './dto/update-schedule.dto';
+import { InjectRepository } from '@nestjs/typeorm';
 import { EmployeeSchedule } from 'src/employee-schedule/entities/employee-schedule.entity';
 import { Repository } from 'typeorm';
-import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class ScheduleService {
   constructor(
     @InjectRepository(EmployeeSchedule)
-    private employeeScheduleRepo: Repository<EmployeeSchedule>,
+    private readonly employeeScheduleRepository: Repository<EmployeeSchedule>,
   ) {}
 
-  async getGroupedSchedule(employeeId: number, startDate: string, endDate: string) {
-    const employeeSchedules = await this.employeeScheduleRepo.find({
+  create(createScheduleDto: CreateScheduleDto) {
+    return 'This action adds a new schedule';
+  }
+
+  findAll() {
+    return `This action returns all schedule`;
+  }
+
+  findOne(id: number) {
+    return `This action returns a #${id} schedule`;
+  }
+
+  update(id: number, updateScheduleDto: UpdateScheduleDto) {
+    return `This action updates a #${id} schedule`;
+  }
+
+  remove(id: number) {
+    return `This action removes a #${id} schedule`;
+  }
+
+  async getGroupedSchedule(
+    employeeId: number,
+    startDate: string,
+    endDate: string,
+  ) {
+    const employeeSchedules = await this.employeeScheduleRepository.find({
       where: { employee: { id: employeeId } },
-      relations: ['employee', 'schedule', 'schedule.scheduleShifts', 'schedule.scheduleShifts.shift'],
+      relations: [
+        'employee',
+        'schedule',
+        'schedule.scheduleShifts',
+        'schedule.scheduleShifts.shift',
+      ],
     });
 
     const start = new Date(startDate);
@@ -46,9 +52,9 @@ export class ScheduleService {
     const groupedSchedules = {};
 
     for (const es of employeeSchedules) {
-      const employeeName = es.employee.name;
+      const employeeName = es.employee.firstName;
       const scheduleName = es.schedule.name;
-      
+
       if (!groupedSchedules[employeeName]) {
         groupedSchedules[employeeName] = {};
       }
@@ -60,13 +66,12 @@ export class ScheduleService {
           dates: [],
         };
       }
-//
+
       for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
         const dateString = d.toISOString().split('T')[0];
         groupedSchedules[employeeName][scheduleName].dates.push(dateString);
       }
     }
-
     return groupedSchedules;
   }
 }
