@@ -1,0 +1,23 @@
+# version: '3.8': Compatibilidade com as versões mais novas do Docker.
+# services: Começamos a declarar os containers (serviços).
+# nest-app: Nome interno do serviço.
+# container_name: Nome visível do container (facilita debug).
+# build.context: Diz de onde ler os arquivos para construir a imagem.
+# ports: Mapeia a porta externa (host) para a porta do container.
+# env_file: Injeta as variáveis do .env automaticamente.
+# restart: always: Garante que o container volte sozinho se cair (bom para produção).
+
+version: '3.8'
+
+services:
+  nest-app:
+    container_name: minha-nest-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+    env_file:
+      - .env
+    restart: always
+
