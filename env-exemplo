@@ -1,0 +1,14 @@
+# PostgreSQL Database
+DB_TYPE=postgres
+DB_HOST=ep-proud-leaf-a4wy27d1-pooler.us-east-1.aws.neon.tech
+DB_PORT=5432
+DB_USERNAME=neondb_owner
+DB_PASSWORD=npg_C1eLjItqFA9P
+DB_DATABASE=neondb
+
+# JWT ou outro sistema de autenticação
+ACCESS_TOKEN_SECRET_KEY=ds82Jk!u7K@1vXpRbM4cLz9NfTqG5Wz
+ACCESS_TOKEN_EXPIRE_TIME=1h
+
+# Application
+PORT=3000
