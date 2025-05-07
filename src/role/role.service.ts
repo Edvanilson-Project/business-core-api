@@ -1,9 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateRoleDto } from './dto/create-role.dto';
 import { UpdateRoleDto } from './dto/update-role.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Role } from './entities/role.entity';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 
 @Injectable()
 export class RoleService {
@@ -18,6 +18,22 @@ export class RoleService {
 
   findAll() {
     return `This action returns all role`;
+  }
+
+  async findByIds(ids: number[]): Promise<Role[]> {
+    const roles = await this.roleRepo.findBy({ id: In(ids) });
+
+    if (roles.length !== ids.length) {
+      // Se não for, isso significa que algum ID não foi encontrado
+      const missingIds = ids.filter(
+        (id) => !roles.some((role) => role.id === id),
+      );
+      throw new BadRequestException(
+        `The following role IDs were not found: ${missingIds.join(', ')}`,
+      );
+    }
+
+    return roles;
   }
 
   findOne(id: number) {
