@@ -1,3 +1,4 @@
+import { Exclude } from 'class-transformer';
 import {
   IsArray,
   IsEmail,
@@ -17,6 +18,7 @@ export class CreateUserDto {
 
   @IsNotEmpty()
   @MinLength(6)
+  //@Exclude()
   password: string;
 
   @IsArray()
