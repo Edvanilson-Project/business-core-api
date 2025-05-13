@@ -1,34 +1,47 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { ShiftService } from './shift.service';
 import { CreateShiftDto } from './dto/create-shift.dto';
 import { UpdateShiftDto } from './dto/update-shift.dto';
+import { Shift } from './entities/shift.entity';
 
 @Controller('shift')
 export class ShiftController {
   constructor(private readonly shiftService: ShiftService) {}
 
   @Post()
-  create(@Body() createShiftDto: CreateShiftDto) {
+  async create(@Body() createShiftDto: CreateShiftDto): Promise<Shift> {
     return this.shiftService.create(createShiftDto);
   }
 
   @Get()
-  findAll() {
+  async findAll(): Promise<Shift[]> {
     return this.shiftService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  async findOne(@Param('id', ParseIntPipe) id: number): Promise<Shift | null> {
     return this.shiftService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateShiftDto: UpdateShiftDto) {
+  async update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateShiftDto: UpdateShiftDto,
+  ): Promise<Shift> {
     return this.shiftService.update(+id, updateShiftDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  async remove(@Param('id', ParseIntPipe) id: number): Promise<void> {
     return this.shiftService.remove(+id);
   }
 }
