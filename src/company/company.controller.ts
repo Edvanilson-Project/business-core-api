@@ -18,30 +18,34 @@ export class CompanyController {
   constructor(private readonly companyService: CompanyService) {}
 
   @Post()
-  create(@Body() createCompanyDto: CreateCompanyDto[]): Promise<Company[]> {
-    return this.companyService.create(createCompanyDto);
+  async create(
+    @Body() createCompanyDto: CreateCompanyDto[],
+  ): Promise<Company[]> {
+    return await this.companyService.create(createCompanyDto);
   }
 
   @Get()
-  findAll(): Promise<Company[]> {
-    return this.companyService.findAll();
+  async findAll(): Promise<Company[]> {
+    return await this.companyService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number): Promise<Company | null> {
-    return this.companyService.findOne(+id);
+  async findOne(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<Company | null> {
+    return await this.companyService.findOne(+id);
   }
 
   @Patch(':id')
-  update(
+  async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateCompanyDto: UpdateCompanyDto,
   ): Promise<Company> {
-    return this.companyService.update(+id, updateCompanyDto);
+    return await this.companyService.update(+id, updateCompanyDto);
   }
 
   @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number): Promise<void> {
-    return this.companyService.remove(+id);
+  async remove(@Param('id', ParseIntPipe) id: number): Promise<void> {
+    return await this.companyService.remove(+id);
   }
 }

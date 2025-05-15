@@ -19,17 +19,17 @@ export class SalaryController {
 
   @Post()
   async create(@Body() createSalaryDto: CreateSalaryDto): Promise<Salary> {
-    return this.salaryService.create(createSalaryDto);
+    return await this.salaryService.create(createSalaryDto);
   }
 
   @Get()
   async findAll(): Promise<Salary[]> {
-    return this.salaryService.findAll();
+    return await this.salaryService.findAll();
   }
 
   @Get(':id')
   async findOne(@Param('id', ParseIntPipe) id: number): Promise<Salary | null> {
-    return this.salaryService.findOne(id);
+    return await this.salaryService.findOne(id);
   }
 
   @Patch(':id')
@@ -37,11 +37,11 @@ export class SalaryController {
     @Param('id', ParseIntPipe) id: number,
     @Body() updateSalaryDto: UpdateSalaryDto,
   ): Promise<Salary> {
-    return this.salaryService.update(id, updateSalaryDto);
+    return await this.salaryService.update(id, updateSalaryDto);
   }
 
   @Delete(':id')
   async remove(@Param('id', ParseIntPipe) id: number): Promise<void> {
-    return this.salaryService.remove(id);
+    return await this.salaryService.remove(id);
   }
 }

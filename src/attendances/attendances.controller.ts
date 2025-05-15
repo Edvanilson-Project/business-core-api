@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { AttendancesService } from './attendances.service';
 import { CreateAttendanceDto } from './dto/create-attendance.dto';
 import { UpdateAttendanceDto } from './dto/update-attendance.dto';
@@ -8,27 +17,34 @@ export class AttendancesController {
   constructor(private readonly attendancesService: AttendancesService) {}
 
   @Post()
-  create(@Body() createAttendanceDto: CreateAttendanceDto) {
-    return this.attendancesService.create(createAttendanceDto);
+  async create(
+    @Body() createAttendanceDto: CreateAttendanceDto,
+  ): Promise<CreateAttendanceDto> {
+    return await this.attendancesService.create(createAttendanceDto);
   }
 
   @Get()
-  findAll() {
-    return this.attendancesService.findAll();
+  async findAll(): Promise<CreateAttendanceDto[]> {
+    return await this.attendancesService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.attendancesService.findOne(+id);
+  async findOne(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<CreateAttendanceDto | null> {
+    return await this.attendancesService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAttendanceDto: UpdateAttendanceDto) {
-    return this.attendancesService.update(+id, updateAttendanceDto);
+  async update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateAttendanceDto: UpdateAttendanceDto,
+  ): Promise<UpdateAttendanceDto> {
+    return await this.attendancesService.update(+id, updateAttendanceDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.attendancesService.remove(+id);
+  async remove(@Param('id', ParseIntPipe) id: number): Promise<void> {
+    return await this.attendancesService.remove(+id);
   }
 }

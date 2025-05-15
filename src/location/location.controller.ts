@@ -18,30 +18,34 @@ export class LocationController {
   constructor(private readonly locationService: LocationService) {}
 
   @Post()
-  create(@Body() createLocationDto: CreateLocationDto): Promise<Location> {
-    return this.locationService.create(createLocationDto);
+  async create(
+    @Body() createLocationDto: CreateLocationDto,
+  ): Promise<Location> {
+    return await this.locationService.create(createLocationDto);
   }
 
   @Get()
-  findAll(): Promise<Location[]> {
-    return this.locationService.findAll();
+  async findAll(): Promise<Location[]> {
+    return await this.locationService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number): Promise<Location | null> {
-    return this.locationService.findOne(+id);
+  async findOne(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<Location | null> {
+    return await this.locationService.findOne(+id);
   }
 
   @Patch(':id')
-  update(
+  async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateLocationDto: UpdateLocationDto,
   ): Promise<Location> {
-    return this.locationService.update(+id, updateLocationDto);
+    return await this.locationService.update(+id, updateLocationDto);
   }
 
   @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number): Promise<void> {
-    return this.locationService.remove(+id);
+  async remove(@Param('id', ParseIntPipe) id: number): Promise<void> {
+    return await this.locationService.remove(+id);
   }
 }

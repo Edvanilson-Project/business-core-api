@@ -19,17 +19,17 @@ export class ShiftController {
 
   @Post()
   async create(@Body() createShiftDto: CreateShiftDto): Promise<Shift> {
-    return this.shiftService.create(createShiftDto);
+    return await this.shiftService.create(createShiftDto);
   }
 
   @Get()
   async findAll(): Promise<Shift[]> {
-    return this.shiftService.findAll();
+    return await this.shiftService.findAll();
   }
 
   @Get(':id')
   async findOne(@Param('id', ParseIntPipe) id: number): Promise<Shift | null> {
-    return this.shiftService.findOne(+id);
+    return await this.shiftService.findOne(+id);
   }
 
   @Patch(':id')
@@ -37,11 +37,11 @@ export class ShiftController {
     @Param('id', ParseIntPipe) id: number,
     @Body() updateShiftDto: UpdateShiftDto,
   ): Promise<Shift> {
-    return this.shiftService.update(+id, updateShiftDto);
+    return await this.shiftService.update(+id, updateShiftDto);
   }
 
   @Delete(':id')
   async remove(@Param('id', ParseIntPipe) id: number): Promise<void> {
-    return this.shiftService.remove(+id);
+    return await this.shiftService.remove(+id);
   }
 }

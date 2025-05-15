@@ -21,19 +21,19 @@ export class DepartmentController {
   async create(
     @Body() createDepartmentDto: CreateDepartmentDto,
   ): Promise<Department> {
-    return this.departmentService.create(createDepartmentDto);
+    return await this.departmentService.create(createDepartmentDto);
   }
 
   @Get()
   async findAll(): Promise<Department[]> {
-    return this.departmentService.findAll();
+    return await this.departmentService.findAll();
   }
 
   @Get(':id')
   async findOne(
     @Param('id', ParseIntPipe) id: number,
   ): Promise<Department | null> {
-    return this.departmentService.findOne(+id);
+    return await this.departmentService.findOne(+id);
   }
 
   @Patch(':id')
@@ -41,11 +41,11 @@ export class DepartmentController {
     @Param('id', ParseIntPipe) id: number,
     @Body() updateDepartmentDto: UpdateDepartmentDto,
   ): Promise<Department> {
-    return this.departmentService.update(+id, updateDepartmentDto);
+    return await this.departmentService.update(+id, updateDepartmentDto);
   }
 
   @Delete(':id')
   async remove(@Param('id', ParseIntPipe) id: number): Promise<void> {
-    return this.departmentService.remove(+id);
+    return await this.departmentService.remove(+id);
   }
 }

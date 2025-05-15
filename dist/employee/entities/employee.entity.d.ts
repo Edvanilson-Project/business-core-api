@@ -1,0 +1,34 @@
+import { BaseEntity } from 'src/common/entities/base.entity';
+import { EmployeePosition } from '../../employee-position/entities/employee-position.entity';
+import { EmployeeLocation } from 'src/employee-location/entities/employee-location.entity';
+export declare class Employee extends BaseEntity {
+    registrationNumber: number;
+    name: string;
+    email: string;
+    cpf: string;
+    rg?: string;
+    issuingAuthority?: string;
+    pis?: string;
+    workCardNumber?: string;
+    workCardSeries?: string;
+    nationality?: string;
+    birthDate?: Date;
+    maritalStatus?: string;
+    educationLevel: string;
+    voterRegistration?: string;
+    driverLicense?: string;
+    driverLicenseCategory?: string;
+    driverLicenseExpiration?: Date;
+    address?: string;
+    city?: string;
+    state?: string;
+    bankName?: string;
+    bankAccountNumber?: string;
+    bankAgencyNumber?: string;
+    healthInsurance?: string;
+    hireDate: Date;
+    terminationDate?: Date;
+    isActive: boolean;
+    employeePositions: EmployeePosition[];
+    employeeLocations: EmployeeLocation[];
+}

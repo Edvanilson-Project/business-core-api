@@ -1,34 +1,56 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { EmployeeScheduleService } from './employee-schedule.service';
 import { CreateEmployeeScheduleDto } from './dto/create-employee-schedule.dto';
 import { UpdateEmployeeScheduleDto } from './dto/update-employee-schedule.dto';
+import { EmployeeSchedule } from './entities/employee-schedule.entity';
 
 @Controller('employee-schedule')
 export class EmployeeScheduleController {
-  constructor(private readonly employeeScheduleService: EmployeeScheduleService) {}
+  constructor(
+    private readonly employeeScheduleService: EmployeeScheduleService,
+  ) {}
 
   @Post()
-  create(@Body() createEmployeeScheduleDto: CreateEmployeeScheduleDto) {
-    return this.employeeScheduleService.create(createEmployeeScheduleDto);
+  async create(
+    @Body() createEmployeeScheduleDto: CreateEmployeeScheduleDto,
+  ): Promise<EmployeeSchedule> {
+    return await this.employeeScheduleService.create(createEmployeeScheduleDto);
   }
 
   @Get()
-  findAll() {
-    return this.employeeScheduleService.findAll();
+  async findAll(): Promise<EmployeeSchedule[]> {
+    return await this.employeeScheduleService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.employeeScheduleService.findOne(+id);
+  async findOne(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<EmployeeSchedule | null> {
+    return await this.employeeScheduleService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateEmployeeScheduleDto: UpdateEmployeeScheduleDto) {
-    return this.employeeScheduleService.update(+id, updateEmployeeScheduleDto);
+  async update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateEmployeeScheduleDto: UpdateEmployeeScheduleDto,
+  ): Promise<EmployeeSchedule> {
+    return await this.employeeScheduleService.update(
+      +id,
+      updateEmployeeScheduleDto,
+    );
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.employeeScheduleService.remove(+id);
+  async remove(@Param('id', ParseIntPipe) id: number): Promise<void> {
+    return await this.employeeScheduleService.remove(+id);
   }
 }

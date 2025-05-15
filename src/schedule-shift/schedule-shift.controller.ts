@@ -21,19 +21,19 @@ export class ScheduleShiftController {
   async create(
     @Body() createScheduleShiftDto: CreateScheduleShiftDto,
   ): Promise<ScheduleShift> {
-    return this.scheduleShiftService.create(createScheduleShiftDto);
+    return await this.scheduleShiftService.create(createScheduleShiftDto);
   }
 
   @Get()
   async findAll(): Promise<ScheduleShift[]> {
-    return this.scheduleShiftService.findAll();
+    return await this.scheduleShiftService.findAll();
   }
 
   @Get(':id')
   async findOne(
     @Param('id', ParseIntPipe) id: number,
   ): Promise<ScheduleShift | null> {
-    return this.scheduleShiftService.findOne(+id);
+    return await this.scheduleShiftService.findOne(+id);
   }
 
   @Patch(':id')
@@ -41,11 +41,11 @@ export class ScheduleShiftController {
     @Param('id', ParseIntPipe) id: number,
     @Body() updateScheduleShiftDto: UpdateScheduleShiftDto,
   ): Promise<ScheduleShift> {
-    return this.scheduleShiftService.update(+id, updateScheduleShiftDto);
+    return await this.scheduleShiftService.update(+id, updateScheduleShiftDto);
   }
 
   @Delete(':id')
   async remove(@Param('id') id: number): Promise<void> {
-    return this.scheduleShiftService.remove(+id);
+    return await this.scheduleShiftService.remove(+id);
   }
 }

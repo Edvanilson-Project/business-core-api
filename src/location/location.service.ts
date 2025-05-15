@@ -35,14 +35,8 @@ export class LocationService {
     return this.locationRepo.find();
   }
 
-  async findOne(id: number): Promise<Location> {
-    const location = await this.locationRepo.findOne({ where: { id } });
-
-    if (!location) {
-      throw new NotFoundException(`Location with ID ${id} not found`);
-    }
-
-    return location;
+  async findOne(id: number): Promise<Location | null> {
+    return this.locationRepo.findOne({ where: { id } });
   }
 
   async findOneOrFail(id: number): Promise<Location> {
